@@ -1,0 +1,28 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<div class="albums-container container-fluid">
+
+
+  <h2> Celebration Home</h1>
+
+    <p>Welcome to <em>Celebrations Portal</em>, a very basic next promotion management portal (Beta Version).</p>
+
+  <h2>Summary</h2>
+
+    <p>You have following record counts:</p>
+
+    <ul>
+      <li><strong> <a href="{% url 'branches' %}">Branch: </a> </strong> {{ num_branch }}</li>
+      <li><strong> <a href="{% url 'customers' %}">Customers:</a> </strong> {{ num_customers }}</li>
+      <li><strong> <a href="{% url 'orders' %}">Orders:</a>  </strong> {{ num_orders }}</li>
+      <li><strong>Number of Visits:</strong> {{ num_visits }}</li>
+    </ul>
+    <hr>
+    <h3><a href="{% url 'data-upload' %}">Upload File:</a> </li>
+    
+  
+</div>
+
+{% endblock %}

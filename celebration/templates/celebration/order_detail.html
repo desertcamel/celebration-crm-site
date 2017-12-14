@@ -1,0 +1,15 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h3>Title: {{ order }}</h3>
+
+  <p><strong>Branch:</strong> <a href="{% url 'branch-detail' order.Branch.pk %}">{{ order.Branch.branch_name}}</a></p> 
+  <p><strong>customer:</strong> <a href="{% url 'customer-detail' order.Customer.pk %}">{{ order.Customer.customer_name}}</a></p> 
+  <p><strong>Occassion:</strong> {{ order.Occassion }}</p> 
+  <p><strong>Order Date:</strong> {{ order.Order_Date }}</p> 
+  <p><strong>Order No:</strong> {{ order.Order_No }}</p> 
+  <p><strong>Total Amount:</strong> {{ order.Total_Amount }}</p> 
+  <p><strong>Delivery Time:</strong> {{ order.Delivery_Time }}</p> 
+  <p><strong>Delivery Mode:</strong> {{ order.Delivery_Mode }}</p> 
+  
+{% endblock %}

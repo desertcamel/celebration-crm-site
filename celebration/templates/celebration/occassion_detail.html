@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h3>Title: {{ occassion }}</h3>
+
+  <p><strong>Branch:</strong> {{ occassion }}</p> <!-- author detail link not yet defined -->
+  <p><strong>Orders:</strong> 
+    {% for order in occassion.order_set.all %} 
+        <hr>
+            <a href="{% url 'order-detail' order.id %}">{{ order.Order_Date }}</a> 
+
+          
+    {% endfor %}
+    </p>  
+
+{% endblock %}
