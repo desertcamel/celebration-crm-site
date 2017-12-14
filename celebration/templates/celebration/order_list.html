@@ -1,0 +1,21 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h3>Order List</h3>
+
+    {% if order_list %}
+    <ul>
+
+      {% for order in order_list %}
+      <li>
+          Customer: {{order.Customer_Name}}  
+          Last Order Delivered on: {{order.Order_Date}} for AED {{order.Total_Amount}}
+          <hr>
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no orders to display!</p>
+    {% endif %}       
+{% endblock %}

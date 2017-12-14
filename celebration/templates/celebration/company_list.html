@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h3>Company List</h3>
+
+    {% if company_list %}
+    <ul>
+
+      {% for company in company_list %}
+      <li>
+        <a href="{% url 'company-detail' company.id %}">{{ company }}</a> ({{company}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no companies!</p>
+    {% endif %}       
+{% endblock %}

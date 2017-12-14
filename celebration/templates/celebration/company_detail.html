@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h3>Title: {{ company }}</h3>
+
+  <p><strong>Company:</strong> {{ company }}</p> <!-- author detail link not yet defined -->
+  <p><strong>Orders:</strong> 
+    {% for order in company.order_set.all %} 
+        <hr>
+            <a href="{% url 'order-detail' order.id %}">{{ order.order_date }}</a> 
+
+          
+    {% endfor %}
+    </p>  
+
+{% endblock %}
