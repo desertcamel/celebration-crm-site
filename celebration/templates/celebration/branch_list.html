@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h3>Branch List</h3>
+
+    {% if branch_list %}
+    <ul>
+
+      {% for branch in branch_list %}
+      <li>
+        <a href="{% url 'branch-detail' branch.id %}">{{ branch }}</a> ({{branch}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no branches!</p>
+    {% endif %}       
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h3>Customer: {{ customer }}</h3>
+
+  <p><strong>Name:</strong> {{ customer.customer_name }}</p> 
+  <p><strong>Tel:</strong> {{ customer.phone_number }}</p> 
+  <p><strong>Email:</strong> {{ customer.email }}</p> 
+  <p><strong>Address:</strong> {{ customer.address }}</p> 
+  <p><strong>Number of Orders:</strong> {{ customer.order_set.count }} </p>
+    <br>
+    <p><strong>List of Orders:</strong> </p>
+    {% for order in customer.order_set.all %} 
+        <hr>
+        <a href="{% url 'order-detail' order.id %}">{{ order.Order_Date }}</a> 
+        
+    {% endfor %}
+
+{% endblock %}

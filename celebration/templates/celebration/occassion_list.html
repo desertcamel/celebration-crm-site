@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h3>Occassion List</h3>
+
+    {% if occassion_list %}
+    <ul>
+
+      {% for occassion in occassion_list %}
+      <li>
+        <a href="{% url 'occassion-detail' occassion.id %}">{{ occassion }}</a> ({{occassion}})
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no occassion!</p>
+    {% endif %}       
+{% endblock %}

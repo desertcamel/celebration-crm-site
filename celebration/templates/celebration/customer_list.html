@@ -1,0 +1,22 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h3>Customer List</h3>
+
+    {% if customer_list %}
+    <ul>
+
+      {% for customer in customer_list %}
+      <li>
+        <a href="{% url 'customer-detail' customer.id %}">{{ customer }}</a> <br> 
+        Tel: {{customer.phone_number}} <br> 
+        # of Orders: {{customer.order_count}} <br>
+        Value of Orders: {{customer.total_order_value}}
+      </li>
+      {% endfor %}
+
+    </ul>
+    {% else %}
+      <p>There are no customers to display!</p>
+    {% endif %}       
+{% endblock %}

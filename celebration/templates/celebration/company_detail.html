@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h3>Title: {{ company }}</h3>
+
+  <p><strong>Company:</strong> {{ company }}</p> <!-- author detail link not yet defined -->
+  <p><strong>Branches:</strong> 
+    {% for branch in company.branch_set.all %} 
+        <hr>
+            <a href="{% url 'branch-detail' branch.id %}">{{ branch.branch_name }}</a> 
+
+          
+    {% endfor %}
+    </p>  
+
+{% endblock %}
