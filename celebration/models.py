@@ -34,10 +34,10 @@ class Occassion(models.Model):
 
 
 class Order(models.Model):
-    Company = models.ForeignKey(Company, blank=True, null=True)
-    Branch = models.ForeignKey(Branch, blank=True, null=True)
-    Customer = models.ForeignKey(Customer, blank=True, null=True)
-    Occassion = models.ForeignKey(Occassion, blank=True, null=True)
+    Company = models.ForeignKey(Company, blank=True, null=True, on_delete=models.CASCADE)
+    Branch = models.ForeignKey(Branch, blank=True, null=True, on_delete=models.CASCADE)
+    Customer = models.ForeignKey(Customer, blank=True, null=True, on_delete=models.CASCADE)
+    Occassion = models.ForeignKey(Occassion, blank=True, null=True, on_delete=models.CASCADE)
     Order_Date = models.DateField( blank=True, null=True)
     Order_No = models.IntegerField(null=True, blank=True)
     Total_Amount = models.FloatField(null=True, blank=True)
@@ -46,6 +46,7 @@ class Order(models.Model):
 
     def __str__(self):
         return '%s for %s' % (self.Order_No, self.Total_Amount)
+
 
 
 class Document(models.Model):
