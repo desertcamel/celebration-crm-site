@@ -87,6 +87,16 @@
        The next parameter carries te current path so the user can be redirected to the same page
        once they are logged-in.  -->
        <hr>
+        
+           {% if user.is_authenticated %}
+           <h4>User: </h4>
+           <li>{{ user.get_full_name }} <br> {{ user.get_username }}</li>
+             <li>{{ user.profile.company_name }}</li>
+
+             <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>   
+           {% else %}
+             <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>   
+           {% endif %} 
 
       </ul>
      {% endblock %}

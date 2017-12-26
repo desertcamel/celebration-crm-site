@@ -7,7 +7,7 @@
   <p><strong>Orders:</strong> 
     {% for order in occassion.order_set.all %} 
         <hr>
-            <a href="{% url 'order-detail' order.id %}">{{ order.Order_Date }}</a> 
+            <a href="{% url 'order-detail' order.id %}">{{ order.Customer }} for AED {{ order.Total_Amount }} ordered on {{ order.Order_Date }}</a> 
 
           
     {% endfor %}
