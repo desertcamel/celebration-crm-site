@@ -12,7 +12,13 @@ urlpatterns += [
     # List
     url(r'^companies/$', views.CompanyListView.as_view(), name='companies'),
     # Detail
-    url(r'comapny/(?P<pk>\d+)$', views.CompanyDetailView.as_view(), name='company-detail'),
+    url(r'company/(?P<pk>\d+)$', views.CompanyDetailView.as_view(), name='company-detail'),
+]
+
+urlpatterns += [  
+    url(r'^company/create/$', views.CompanyCreate.as_view(), name='company_create'),
+    url(r'^company/(?P<pk>\d+)/update/$', views.CompanyUpdate.as_view(), name='company_update'),
+    url(r'^company/(?P<pk>\d+)/delete/$', views.CompanyDelete.as_view(), name='company_delete'),
 ]
 
 # Branch Urls
@@ -21,6 +27,13 @@ urlpatterns += [
     url(r'^branches/$', views.BranchListView.as_view(), name='branches'),
     # Detail
     url(r'branch/(?P<pk>\d+)$', views.BranchDetailView.as_view(), name='branch-detail'),
+]
+
+
+urlpatterns += [  
+    url(r'^branch/create/$', views.BranchCreate.as_view(), name='branch_create'),
+    url(r'^branch/(?P<pk>\d+)/update/$', views.BranchUpdate.as_view(), name='branch_update'),
+    url(r'^branch/(?P<pk>\d+)/delete/$', views.BranchDelete.as_view(), name='branch_delete'),
 ]
 
 # Occassion Urls
@@ -51,4 +64,8 @@ urlpatterns += [
 # Form Handling
 urlpatterns += [   
     url(r'^data/$', views.data_upload, name='data-upload'),
+]
+
+urlpatterns += [  
+    url(r'^profile/create/$', views.update_profile, name='profile_create'),
 ]

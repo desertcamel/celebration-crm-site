@@ -26,9 +26,15 @@ urlpatterns = [
 
 #URL pattern mappings
 urlpatterns += [
-    url(r'^$', RedirectView.as_view(url='/celebration/', permanent=True)),
+#    url(r'^$', RedirectView.as_view(url='/celebration/', permanent=True)),
     url(r'^celebration/', include('celebration.urls')),
 ]
+
+#Add Django site authentication urls (for login, logout, password management)
+urlpatterns += [
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
