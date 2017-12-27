@@ -44,6 +44,26 @@ def index(request):
         'num_orders':num_orders, 'num_visits':num_visits}, # num_visits appended
     )
 
+def  home_page(request):
+    """
+    View function for home page of site.
+    """
+    # Generate counts of some of the main objects
+    num_branch=Branch.objects.all().count()
+    num_customers=Customer.objects.all().count()
+    num_occassions=Occassion.objects.all().count()
+    num_orders=Order.objects.all().count()
+
+    # Render the HTML template index.html with the data in the context variable.
+    return render(
+        request,
+        'base_home.html',
+        context={'num_branch':num_branch,'num_customers':num_customers,'num_occassions':num_occassions, 
+        'num_orders':num_orders}, # num_visits appended
+    )
+
+
+
 # Company
 class CompanyListView(generic.ListView):
     model = Company
@@ -200,9 +220,16 @@ def process_data(upfile):
 
     xls=xls.rename(columns=col_name_map, index=str)
 
-    xls = xls[['Branch', 'Order_Date', 'Customer_Name', 'Order_No', 'Contact_No', 'Total_Amount', 'Occassion']]
+    xls = xls[['Branch', 'Order_Date', 'Delivery_Date', 'Customer_Name', 'Order_No', 'Contact_No', 'Total_Amount', 'Occassion']]
 
+    # Clean Data
     xls.dropna(subset=['Contact_No'], inplace=True)
+    xls['Occassion'] = xls['Occassion'].fillna('Not Mentioned')
+    xls['Total_Amount'] = xls['Total_Amount'].fillna(0)
+    xls['Order_Date'] = xls['Order_Date'].fillna(method='ffill')
+    xls['Delivery_Date'] = xls['Delivery_Date'].fillna(method='ffill')
+    xls['Branch'] = xls['Branch'].fillna(method='ffill')
+    
 
     xls[['Order_Date']] = xls[['Order_Date']].apply(pd.to_datetime, errors='coerce')
     xls[['Order_No', 'Contact_No', 'Total_Amount',]] = xls[['Order_No', 'Contact_No', 'Total_Amount',]].apply(pd.to_numeric, errors='coerce')
@@ -211,6 +238,7 @@ def process_data(upfile):
 
     xls['Branch'] = xls['Branch'].replace(branch_alias_dict)
     xls['Occassion'] = xls['Occassion'].replace(occassion_alias_dict)
+
 
     dict_list = xls.to_dict('records')
 

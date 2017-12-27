@@ -66,6 +66,11 @@ urlpatterns += [
     url(r'^data/$', views.data_upload, name='data-upload'),
 ]
 
+# Home Page
+urlpatterns += [   
+    url(r'^home/$', views.home_page, name='home'),
+]
+
 urlpatterns += [  
     url(r'^profile/create/$', views.update_profile, name='profile_create'),
 ]
