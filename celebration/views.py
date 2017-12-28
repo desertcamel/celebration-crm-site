@@ -16,6 +16,7 @@ from django.core.files.storage import FileSystemStorage
 
 import pandas as pd
 import csv
+import json
 
 # Create your views here.
 
@@ -90,12 +91,73 @@ class CompanyDelete(DeleteView):
 
 
 # Branch
-class BranchListView(generic.ListView):
-    model = Branch
-    paginate_by = 50
 
-    def get_queryset(self):
-        return Branch.objects.all().order_by('branch_name')
+def  branch_list(request):
+    template = 'celebration/branch_list.html'
+    branch_list = Branch.objects.order_by('branch_name')
+    
+    input_data = []
+
+    # extract values as tuples and convert queryset to a list
+    branches = list(Branch.objects.values('branch_name'))
+
+    for b in branches:
+        entry = {'Branch': b['branch_name'], 'Count': Branch.objects.get(branch_name = b['branch_name']).order_set.count()}
+        input_data.append(entry)
+
+    print ('input data')
+    print (input_data)
+
+    keyList = ['Branch', 'Count']
+    input_data = [[row[key] for row in input_data] for key in keyList]
+    print (input_data)
+
+    # create context to pass 
+    context = {
+        'branch_list': branch_list,
+        'data_table': json.dumps(input_data),
+    }
+    # Render the HTML template index.html with the data in the context variable.
+    return render(
+        request,
+        template,
+        context # num_visits appended
+    )
+
+
+def  branch_list____(request):
+    template = 'celebration/branch_list.html'
+    branch_list = Branch.objects.order_by('branch_name')
+    
+    input_data = [
+        ['Branch', 'Company'],
+        ]
+
+    # extract values as tuples and convert queryset to a list
+    branches = list(Branch.objects.values_list('branch_name', 'company_name'))
+    print ("Branches")
+    print (branches)
+    for b in branches:
+        input_data.append(list(b))
+
+    # create context to pass 
+    context = {
+        'branch_list': branch_list,
+        'data_table': json.dumps(input_data),
+    }
+    # Render the HTML template index.html with the data in the context variable.
+    return render(
+        request,
+        template,
+        context # num_visits appended
+    )
+
+
+
+
+
+
+
 
 class BranchDetailView(generic.DetailView):
     model = Branch

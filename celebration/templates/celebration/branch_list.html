@@ -1,15 +1,23 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
+
+
+  <div id="branch_chart_div" ></div>
+
+  
+
     <h3>Branch List</h3>
 
     {% if branch_list %}
+    <p>branch Count: {{ branch_list.count}}</p>  
+    
     <ul>
 
       {% for branch in branch_list %}
       <li>
-        <a href="{% url 'branch-detail' branch.id %}">{{ branch }}</a> ({{branch}})
-      </li>
+          <a href="{% url 'branch-detail' branch.id %}">{{ branch }}</a> ({{branch}}) [ {{ branch.order_set.count }} ]
+        </li>  
       {% endfor %}
 
     </ul>

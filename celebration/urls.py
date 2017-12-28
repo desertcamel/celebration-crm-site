@@ -24,7 +24,7 @@ urlpatterns += [
 # Branch Urls
 urlpatterns += [
     # List
-    url(r'^branches/$', views.BranchListView.as_view(), name='branches'),
+    url(r'^branches/$', views.branch_list, name='branches'),
     # Detail
     url(r'branch/(?P<pk>\d+)$', views.BranchDetailView.as_view(), name='branch-detail'),
 ]
