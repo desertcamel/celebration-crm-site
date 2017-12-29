@@ -24,7 +24,7 @@ urlpatterns += [
 # Branch Urls
 urlpatterns += [
     # List
-    url(r'^branches/$', views.BranchListView.as_view(), name='branches'),
+    url(r'^branches/$', views.branch_list, name='branches'),
     # Detail
     url(r'branch/(?P<pk>\d+)$', views.BranchDetailView.as_view(), name='branch-detail'),
 ]
@@ -47,7 +47,7 @@ urlpatterns += [
 # Customer Urls
 urlpatterns += [
     # List
-    url(r'^customers/$', views.CustomerListView.as_view(), name='customers'),
+    url(r'^customers/$', views.customer_list, name='customers'),
     # Detail
     url(r'customer/(?P<pk>\d+)$', views.CustomerDetailView.as_view(), name='customer-detail'),
 ]
@@ -64,11 +64,6 @@ urlpatterns += [
 # Form Handling
 urlpatterns += [   
     url(r'^data/$', views.data_upload, name='data-upload'),
-]
-
-# Home Page
-urlpatterns += [   
-    url(r'^home/$', views.home_page, name='home'),
 ]
 
 urlpatterns += [  
