@@ -1,0 +1,48 @@
+{% extends "base_head.html" %}
+{% block chart_scripts %}
+
+<script type="text/javascript">
+
+    google.charts.load('current');   // Don't need to specify chart libraries!
+
+
+    google.charts.setOnLoadCallback(drawIndexChart);
+    google.charts.setOnLoadCallback(drawBranchesTableChart);
+
+
+    function drawIndexChart() {
+    var wrapper = new google.visualization.ChartWrapper({
+        chartType: 'ColumnChart',
+        dataTable: [['', 'Branches', 'Customers', 'Orders', 'Occassions'],
+                    ['', {{ num_branch }} , {{ num_customers }}, {{ num_orders }}, {{ num_occassions }}]],
+        options: {
+            'legend':'bottom',
+            'title': 'Overview'
+            },
+        containerId: 'index_chart_div'
+    });
+    wrapper.draw();
+    }
+
+
+    function drawBranchesTableChart() {
+
+        var dataTable = new google.visualization.arrayToDataTable({{ data_table|safe }});
+
+        var wrapper = new google.visualization.ChartWrapper({
+        chartType: 'BarChart',
+        dataTable,
+        options: {
+            'title': 'Number of Orders',
+            },
+        containerId: 'branch_chart_div'
+        });
+        wrapper.draw();
+
+    }
+
+
+
+
+</script>
+{% endblock %}
