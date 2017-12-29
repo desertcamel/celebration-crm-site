@@ -47,7 +47,7 @@ urlpatterns += [
 # Customer Urls
 urlpatterns += [
     # List
-    url(r'^customers/$', views.CustomerListView.as_view(), name='customers'),
+    url(r'^customers/$', views.customer_list, name='customers'),
     # Detail
     url(r'customer/(?P<pk>\d+)$', views.CustomerDetailView.as_view(), name='customer-detail'),
 ]
@@ -64,11 +64,6 @@ urlpatterns += [
 # Form Handling
 urlpatterns += [   
     url(r'^data/$', views.data_upload, name='data-upload'),
-]
-
-# Home Page
-urlpatterns += [   
-    url(r'^home/$', views.home_page, name='home'),
 ]
 
 urlpatterns += [  

@@ -45,24 +45,6 @@ def index(request):
         'num_orders':num_orders, 'num_visits':num_visits}, # num_visits appended
     )
 
-def  home_page(request):
-    """
-    View function for home page of site.
-    """
-    # Generate counts of some of the main objects
-    num_branch=Branch.objects.all().count()
-    num_customers=Customer.objects.all().count()
-    num_occassions=Occassion.objects.all().count()
-    num_orders=Order.objects.all().count()
-
-    # Render the HTML template index.html with the data in the context variable.
-    return render(
-        request,
-        'base_home.html',
-        context={'num_branch':num_branch,'num_customers':num_customers,'num_occassions':num_occassions, 
-        'num_orders':num_orders}, # num_visits appended
-    )
-
 
 
 # Company
@@ -91,66 +73,28 @@ class CompanyDelete(DeleteView):
 
 
 # Branch
+from django.db.models import Count
 
 def  branch_list(request):
     template = 'celebration/branch_list.html'
     branch_list = Branch.objects.order_by('branch_name')
     
-    input_data = []
-
-    # extract values as tuples and convert queryset to a list
-    branches = list(Branch.objects.values('branch_name'))
+    sample_data = [['Branch', 'Count']]
+    branches = Branch.objects.values('branch_name', order_count=Count('order')).order_by('order_count')
 
     for b in branches:
-        entry = {'Branch': b['branch_name'], 'Count': Branch.objects.get(branch_name = b['branch_name']).order_set.count()}
-        input_data.append(entry)
-
-    print ('input data')
-    print (input_data)
-
-    keyList = ['Branch', 'Count']
-    input_data = [[row[key] for row in input_data] for key in keyList]
-    print (input_data)
+        sample_data3 = [[b['branch_name'], b['order_count']]]
+        sample_data += sample_data3
 
     # create context to pass 
     context = {
         'branch_list': branch_list,
-        'data_table': json.dumps(input_data),
+        'data_table': json.dumps(sample_data),
     }
     # Render the HTML template index.html with the data in the context variable.
-    return render(
-        request,
-        template,
-        context # num_visits appended
-    )
+    return render(request, template, context)
 
 
-def  branch_list____(request):
-    template = 'celebration/branch_list.html'
-    branch_list = Branch.objects.order_by('branch_name')
-    
-    input_data = [
-        ['Branch', 'Company'],
-        ]
-
-    # extract values as tuples and convert queryset to a list
-    branches = list(Branch.objects.values_list('branch_name', 'company_name'))
-    print ("Branches")
-    print (branches)
-    for b in branches:
-        input_data.append(list(b))
-
-    # create context to pass 
-    context = {
-        'branch_list': branch_list,
-        'data_table': json.dumps(input_data),
-    }
-    # Render the HTML template index.html with the data in the context variable.
-    return render(
-        request,
-        template,
-        context # num_visits appended
-    )
 
 
 
@@ -176,15 +120,35 @@ class BranchDelete(DeleteView):
     success_url = reverse_lazy('index')
 
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
+
+# Customer List View
+def  customer_list(request):
+    template = 'celebration/customer_list.html'
+    customer_list = Customer.objects.order_by('customer_name')
+
+    paginator = Paginator(customer_list, 25) # Show # contacts per page
+    page = request.GET.get('page')
+    customer_list = paginator.get_page(page)
 
 
-# Customer
-class CustomerListView(generic.ListView):
-    model = Customer
-    paginate_by = 200
+    sample_data = [['Customer', 'Count']]
+    customers = Customer.objects.values('customer_name', order_count=Count('order')).order_by('order_count')
 
-    def get_queryset(self):
-        return Customer.objects.all().order_by('customer_name')
+    for b in customers:
+        sample_data3 = [[b['customer_name'], b['order_count']]]
+        sample_data += sample_data3
+
+    # create context to pass 
+    context = {
+        'customer_list': customer_list,
+        'data_table': json.dumps(sample_data),
+    }
+    # Render the HTML template index.html with the data in the context variable.
+    return render(request, template, context)
+
+
 
 class CustomerDetailView(generic.DetailView):
     model = Customer
@@ -199,6 +163,10 @@ class OccassionListView(generic.ListView):
 
 class OccassionDetailView(generic.DetailView):
     model = Occassion
+
+
+
+
 
 # Order
 class OrderListView(generic.ListView):
