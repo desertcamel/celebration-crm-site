@@ -24,22 +24,22 @@ urlpatterns += [
 # Branch Urls
 urlpatterns += [
     # List
-    url(r'^branches/$', views.branch_list, name='branches'),
+    url(r'branches/$', views.branch_list, name='branches'),
     # Detail
     url(r'branch/(?P<pk>\d+)$', views.BranchDetailView.as_view(), name='branch-detail'),
 ]
 
 
 urlpatterns += [  
-    url(r'^branch/create/$', views.BranchCreate.as_view(), name='branch_create'),
-    url(r'^branch/(?P<pk>\d+)/update/$', views.BranchUpdate.as_view(), name='branch_update'),
-    url(r'^branch/(?P<pk>\d+)/delete/$', views.BranchDelete.as_view(), name='branch_delete'),
+    url(r'branch/create/$', views.BranchCreate.as_view(), name='branch_create'),
+    url(r'branch/(?P<pk>\d+)/update/$', views.BranchUpdate.as_view(), name='branch_update'),
+    url(r'branch/(?P<pk>\d+)/delete/$', views.BranchDelete.as_view(), name='branch_delete'),
 ]
 
 # Occassion Urls
 urlpatterns += [
     # List
-    url(r'^occassions/$', views.OccassionListView.as_view(), name='occassions'),
+    url(r'occassions/$', views.OccassionListView.as_view(), name='occassions'),
     # Detail
     url(r'occassion/(?P<pk>\d+)$', views.OccassionDetailView.as_view(), name='occassion-detail'),
 ]
@@ -47,9 +47,10 @@ urlpatterns += [
 # Customer Urls
 urlpatterns += [
     # List
-    url(r'^customers/$', views.customer_list, name='customers'),
+    url(r'customers/$', views.customer_list, name='customers'),
     # Detail
     url(r'customer/(?P<pk>\d+)$', views.CustomerDetailView.as_view(), name='customer-detail'),
+    url(r'customer/update/$', views.update_customers, name='customer-update'),
 ]
 
 # Order Urls
