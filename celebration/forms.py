@@ -24,3 +24,10 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('user', 'company_name')
+
+# SEARCH FORMS
+
+class OrderForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = 'Company', 'Branch', 'Occassion'

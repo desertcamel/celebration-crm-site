@@ -1,0 +1,29 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<form method="get" action="">
+        {% csrf_token %}
+    <table>
+            {{ order_form.as_table }}
+            
+    </table>
+    <input type="submit" value="Submit" />
+</form>
+
+<form method="post" action="">
+    {{ formset.management_form }}
+    {% csrf_token %}
+    
+<table class="table table-striped">
+    {% for form in formset %}
+    <tr>
+    <td>Customer Name:</td> <td> {{ form.customer_name }} </td>
+    <td>Phone Number:</td> <td> {{ form.phone_number }} </td>
+    </tr>
+    {% endfor %}
+</table>
+<input type="submit" value="Submit" />
+</form>
+
+{% endblock %}

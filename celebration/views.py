@@ -153,6 +153,41 @@ def  customer_list(request):
 class CustomerDetailView(generic.DetailView):
     model = Customer
 
+
+# Update Customers
+from django.forms import modelform_factory, modelformset_factory, inlineformset_factory
+from .forms import OrderForm
+from django.shortcuts import render
+def update_customers(request):
+    CustomerFormset = modelformset_factory(Customer, fields='__all__')
+    formset = CustomerFormset(queryset = Customer.objects.filter(customer_name__startswith="a"))
+
+    order_form = OrderForm()
+
+    if request.method == 'POST':
+        formset = CustomerFormset(request.POST, request.FILES)
+        if formset.is_valid():
+            formset.save()
+    elif request.method == 'GET':
+        # FINISH ALL SEARCH QUERY COMBINATION
+        order_form = OrderForm(request.GET)
+        if order_form.is_valid:
+            if len (request.GET) > 0: 
+                q_branch = Branch.objects.get(id=request.GET['Branch'])
+                q_company = Company.objects.get(id=request.GET['Company'])
+                q_occassion = Occassion.objects.get(id=request.GET['Occassion'])
+                q_customer = Customer.objects.filter(order__Branch=q_branch, order__Company=q_company, order__Occassion=q_occassion).order_by('customer_name')[:50]
+            else:
+                q_customer = Customer.objects.filter(order__Branch__id = 1).order_by('customer_name')[:50]
+
+            formset = CustomerFormset(queryset = q_customer)
+    else:
+        qset  = Customer.objects.filter(customer_name__startswith="a").order_by('customer_name')[:50]
+        formset = CustomerFormset(queryset = qset)
+
+    return render(request, 'celebration/customer_update.html', {'formset': formset, 'order_form': order_form})        
+
+
 # Occassion
 class OccassionListView(generic.ListView):
     model = Occassion
